@@ -1,4 +1,4 @@
-package carlohoa.quizapp;
+package carlohoa.quizapp.Activities;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -13,6 +13,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import carlohoa.quizapp.R;
 
 public class ActivityNewGame extends Activity {
 
@@ -67,7 +69,7 @@ public class ActivityNewGame extends Activity {
 //                        JSONArray mat = new JSONArray(result);
                         for (int i = 0; i < dataArray.length(); i++) {
                             JSONObject dataObject = dataArray.getJSONObject(i);
-                            String name = dataObject.getString("category");
+                            String name = dataObject.getString("difficulty");
                             retur = retur + name+ "\n";
                             System.out.println(retur);
                         }

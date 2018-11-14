@@ -1,10 +1,12 @@
-package carlohoa.quizapp;
+package carlohoa.quizapp.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+
+import carlohoa.quizapp.R;
 
 public class ActivityMain extends AppCompatActivity {
 
