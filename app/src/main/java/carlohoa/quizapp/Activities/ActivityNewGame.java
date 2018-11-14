@@ -13,12 +13,18 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
+import carlohoa.quizapp.Model.Quiz;
 import carlohoa.quizapp.R;
 
 public class ActivityNewGame extends Activity {
 
     TextView textView;
+
+    private List<Quiz> quizList;
+    private Quiz quiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +33,7 @@ public class ActivityNewGame extends Activity {
         textView = (TextView) findViewById(R.id.jsontekst);
         getJSON task = new getJSON();
 
+        quizList = new ArrayList<>();
 //        task.execute(new String[]{
 //                "http://student.cs.hioa.no/~s315613/jsonout.php"
 //        });
@@ -36,11 +43,11 @@ public class ActivityNewGame extends Activity {
         });
     }
 
-    private class getJSON extends AsyncTask<String, Void, String> {
+    private class getJSON extends AsyncTask<String, Void, List<Quiz>> {
         JSONObject jsonObject;
 
         @Override
-        protected String doInBackground(String... urls) {
+        protected List doInBackground(String... urls) {
             String retur = "";
             String s = "";
             String result = "";
@@ -69,25 +76,35 @@ public class ActivityNewGame extends Activity {
 //                        JSONArray mat = new JSONArray(result);
                         for (int i = 0; i < dataArray.length(); i++) {
                             JSONObject dataObject = dataArray.getJSONObject(i);
-                            String name = dataObject.getString("difficulty");
-                            retur = retur + name+ "\n";
-                            System.out.println(retur);
+//                            String name = dataObject.getString("difficulty");
+                            quiz = new Quiz();
+
+                            quiz.setID(i);
+                            quiz.setCategory(dataObject.getString("category"));;
+                            quiz.setType(dataObject.getString("type"));
+                            quiz.setDifficulty(dataObject.getString("difficulty"));
+                            quiz.setQuestion(dataObject.getString("question"));
+                            quiz.setCorrectAnswer(dataObject.getString("correct_answer"));
+
+                            quizList.add(quiz);
+//                            retur = retur + name+ "\n";
+//                            System.out.println("Data fra quiz-objekt: " + quiz.getCategory());
                         }
-                        return retur;
+                        return quizList;
                     }catch (JSONException e){
                         e.printStackTrace();
                     }
-                    return retur;
-                }catch (Exception e){
-                    return "Noe gikk feil";
-                }
+                    return quizList;
+                }catch (Exception e){}
             }
-            return retur;
+            return quizList;
         }
 
         @Override
-        protected void onPostExecute(String ss) {
-            textView.setText(ss);
+        protected void onPostExecute(List<Quiz> quiz) {
+            for(int i = 0; i < quiz.size(); i++){
+                textView.setText(quiz.get(i).getQuestion());
+            }
         }
     }
 }
