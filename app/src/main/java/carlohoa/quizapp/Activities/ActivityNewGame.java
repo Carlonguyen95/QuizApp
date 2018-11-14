@@ -3,6 +3,8 @@ package carlohoa.quizapp.Activities;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -22,24 +24,40 @@ import carlohoa.quizapp.R;
 public class ActivityNewGame extends Activity {
 
     TextView textView;
+    TextView quizCategory;
+    TextView quizDifficulty;
+    TextView quizQuestion;
+    Button quizNextQuestion;
 
     private List<Quiz> quizList;
     private Quiz quiz;
+    private Integer quizCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_game);
-        textView = (TextView) findViewById(R.id.jsontekst);
+
         getJSON task = new getJSON();
-
         quizList = new ArrayList<>();
-//        task.execute(new String[]{
-//                "http://student.cs.hioa.no/~s315613/jsonout.php"
-//        });
-
         task.execute(new String[]{
                 "https://opentdb.com/api.php?amount=10&type=boolean"
+        });
+
+        textView = (TextView) findViewById(R.id.jsontekst);
+        quizCategory = (TextView) findViewById(R.id.quiz_category);
+        quizDifficulty = (TextView) findViewById(R.id.quiz_difficulty);
+        quizQuestion = (TextView) findViewById(R.id.quiz_question);
+        quizNextQuestion = (Button) findViewById(R.id.quiz_next_question);
+
+        quizNextQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quizCategory.setText(quizList.get(quizCounter).getCategory());
+                quizDifficulty.setText(quizList.get(quizCounter).getDifficulty());
+                quizQuestion.setText(quizList.get(quizCounter).getQuestion());
+                quizCounter--;
+            }
         });
     }
 
@@ -102,9 +120,12 @@ public class ActivityNewGame extends Activity {
 
         @Override
         protected void onPostExecute(List<Quiz> quiz) {
-            for(int i = 0; i < quiz.size(); i++){
-                textView.setText(quiz.get(i).getQuestion());
-            }
+            quizCounter = quizList.size()-1;
+
+            textView.setText("Question");
+            quizCategory.setText(quiz.get(quizCounter).getCategory());
+            quizDifficulty.setText(quiz.get(quizCounter).getDifficulty());
+            quizQuestion.setText(quiz.get(quizCounter).getQuestion());
         }
     }
 }
