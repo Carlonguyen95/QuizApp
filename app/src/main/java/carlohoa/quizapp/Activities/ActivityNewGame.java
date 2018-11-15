@@ -1,6 +1,7 @@
 package carlohoa.quizapp.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import carlohoa.quizapp.Model.Quiz;
 import carlohoa.quizapp.R;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 public class ActivityNewGame extends Activity {
 
@@ -32,6 +34,11 @@ public class ActivityNewGame extends Activity {
     private List<Quiz> quizList;
     private Quiz quiz;
     private Integer quizCounter;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

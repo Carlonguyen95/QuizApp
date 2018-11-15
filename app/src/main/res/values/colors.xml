@@ -16,4 +16,6 @@
     <color name="colorCelebrities">#c905df</color>
     <color name="colorAnimals">#65b70d</color>
 
+    <color name="color_play_button">#FF05DF3F</color>
+
 </resources>

@@ -1,5 +1,6 @@
 package carlohoa.quizapp.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,8 +9,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import carlohoa.quizapp.R;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 public class ActivityMain extends AppCompatActivity {
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
