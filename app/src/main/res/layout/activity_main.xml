@@ -25,18 +25,18 @@
         android:shadowDy="10"
         android:shadowRadius="20"/>
 
-    <ImageButton
-        android:id="@+id/gameStartBtn"
+    <Button
+        android:id="@+id/game_start_button"
         android:layout_width="wrap_content"
-        android:layout_height="115dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
-        android:padding="15dp"/>
-        <!--android:background="@drawable/home_button_shape"-->
-        <!--android:src="@drawable/playlogo1" />-->
+        android:padding="15dp"
+        android:text="@string/play"
+        android:background="@drawable/play_icon_shape"/>
 
     <ImageButton
-        android:id="@+id/gameStatsBtn"
+        android:id="@+id/game_stats_button"
         android:layout_width="wrap_content"
         android:layout_height="115dp"
         android:padding="15dp"
@@ -46,7 +46,7 @@
         <!--android:src="@drawable/statslogo" />-->
 
     <ImageButton
-        android:id="@+id/gameSettingsBtn"
+        android:id="@+id/game_settings_button"
         android:layout_width="wrap_content"
         android:layout_height="115dp"
         android:padding="15dp"

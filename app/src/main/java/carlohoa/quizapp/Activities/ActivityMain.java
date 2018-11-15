@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import carlohoa.quizapp.R;
@@ -15,8 +16,8 @@ public class ActivityMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ImageButton gameStartBtn = (ImageButton)findViewById(R.id.gameStartBtn);
-        gameStartBtn.setOnClickListener(new View.OnClickListener() {
+        final Button gameStartButton = (Button)findViewById(R.id.game_start_button);
+        gameStartButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 openNewGame();
             }
