@@ -25,6 +25,7 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 public class ActivityNewGame extends Activity {
 
+    TextView quizScore;
     TextView quizCategory;
     TextView quizQuestion;
     Button quizNextQuestion;
@@ -52,6 +53,7 @@ public class ActivityNewGame extends Activity {
                 "https://opentdb.com/api.php?amount=10&type=boolean"
         });
 
+        quizScore = (TextView) findViewById(R.id.quiz_score);
         quizCategory = (TextView) findViewById(R.id.quiz_category);
         quizQuestion = (TextView) findViewById(R.id.quiz_question);
         quizNextQuestion = (Button) findViewById(R.id.quiz_next_question);
@@ -102,11 +104,10 @@ public class ActivityNewGame extends Activity {
     }
 
     private void updateActivityView(){
-
+        quizScore.setText(quizCounter + " / " + quizList.size());
     }
 
     private class getJSON extends AsyncTask<String, Void, List<Quiz>> {
-        JSONObject jsonObject;
 
         @Override
         protected List doInBackground(String... urls) {
@@ -117,53 +118,50 @@ public class ActivityNewGame extends Activity {
             for(String url : urls){
                 try {
                     URL urlen = new URL(urls[0]);
-                    HttpURLConnection conn = (HttpURLConnection)
-                            urlen.openConnection();
+                    HttpURLConnection conn = (HttpURLConnection) urlen.openConnection();
                     conn.setRequestMethod("GET");
                     conn.setRequestProperty("Accept", "application/json");
                     if(conn.getResponseCode() != 200){
                         throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
                     }
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    System.out.println("Output from Server .... \n");
                     while((s = br.readLine()) != null) {
                         result = result + s;
                     }
-                    System.out.println("Output: " + result);
+                    System.out.println("Result from URL: " + result);
                     conn.disconnect();
 
                     try{
                         JSONObject jsonObject = new JSONObject(result);
                         JSONArray dataArray = jsonObject.getJSONArray("results");
-//                        JSONArray mat = new JSONArray(result);
                         for (int i = 0; i < dataArray.length(); i++) {
                             JSONObject dataObject = dataArray.getJSONObject(i);
-//                            String name = dataObject.getString("difficulty");
-                            quiz = new Quiz();
 
+                            quiz = new Quiz();
                             quiz.setID(i);
                             quiz.setCategory(dataObject.getString("category"));;
                             quiz.setType(dataObject.getString("type"));
                             quiz.setDifficulty(dataObject.getString("difficulty"));
                             quiz.setQuestion(dataObject.getString("question"));
                             quiz.setCorrectAnswer(dataObject.getString("correct_answer"));
-
                             quizList.add(quiz);
 //                            retur = retur + name+ "\n";
-//                            System.out.println("Data fra quiz-objekt: " + quiz.getCategory());
                         }
                         return quizList;
                     }catch (JSONException e){
                         e.printStackTrace();
                     }
                     return quizList;
-                }catch (Exception e){}
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
             return quizList;
         }
 
         @Override
         protected void onPostExecute(List<Quiz> quiz) {
+            updateActivityView();
             quizCounter = quizList.size()-1;
 
             quizCategory.setText(quiz.get(quizCounter).getCategory());
