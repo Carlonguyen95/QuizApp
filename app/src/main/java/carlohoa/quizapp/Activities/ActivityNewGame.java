@@ -25,9 +25,7 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 public class ActivityNewGame extends Activity {
 
-    TextView textView;
     TextView quizCategory;
-    TextView quizDifficulty;
     TextView quizQuestion;
     Button quizNextQuestion;
 
@@ -51,9 +49,7 @@ public class ActivityNewGame extends Activity {
                 "https://opentdb.com/api.php?amount=10&type=boolean"
         });
 
-        textView = (TextView) findViewById(R.id.jsontekst);
         quizCategory = (TextView) findViewById(R.id.quiz_category);
-        quizDifficulty = (TextView) findViewById(R.id.quiz_difficulty);
         quizQuestion = (TextView) findViewById(R.id.quiz_question);
         quizNextQuestion = (Button) findViewById(R.id.quiz_next_question);
 
@@ -61,7 +57,6 @@ public class ActivityNewGame extends Activity {
             @Override
             public void onClick(View v) {
                 quizCategory.setText(quizList.get(quizCounter).getCategory());
-                quizDifficulty.setText(quizList.get(quizCounter).getDifficulty());
                 quizQuestion.setText(quizList.get(quizCounter).getQuestion());
                 quizCounter--;
             }
@@ -129,9 +124,7 @@ public class ActivityNewGame extends Activity {
         protected void onPostExecute(List<Quiz> quiz) {
             quizCounter = quizList.size()-1;
 
-            textView.setText("Question");
             quizCategory.setText(quiz.get(quizCounter).getCategory());
-            quizDifficulty.setText(quiz.get(quizCounter).getDifficulty());
             quizQuestion.setText(quiz.get(quizCounter).getQuestion());
         }
     }
