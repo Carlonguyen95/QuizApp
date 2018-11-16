@@ -34,4 +34,21 @@
         android:layout_marginBottom="134dp"
         android:text="Next" />
 
+    <Button
+        android:id="@+id/quiz_true_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/quiz_next_question"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-134dp"
+        android:text="True" />
+
+    <Button
+        android:id="@+id/quiz_false_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/quiz_true_button"
+        android:layout_centerHorizontal="true"
+        android:text="False" />
+
 </RelativeLayout>

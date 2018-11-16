@@ -28,10 +28,13 @@ public class ActivityNewGame extends Activity {
     TextView quizCategory;
     TextView quizQuestion;
     Button quizNextQuestion;
+    Button quizTrueButton;
+    Button quizFalseButton;
 
     private List<Quiz> quizList;
     private Quiz quiz;
     private Integer quizCounter;
+    private boolean answer;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -52,7 +55,13 @@ public class ActivityNewGame extends Activity {
         quizCategory = (TextView) findViewById(R.id.quiz_category);
         quizQuestion = (TextView) findViewById(R.id.quiz_question);
         quizNextQuestion = (Button) findViewById(R.id.quiz_next_question);
+        quizTrueButton = (Button) findViewById(R.id.quiz_true_button);
+        quizFalseButton = (Button) findViewById(R.id.quiz_false_button);
 
+        setListener();
+    }
+
+    private void setListener(){
         quizNextQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +70,32 @@ public class ActivityNewGame extends Activity {
                 quizCounter--;
             }
         });
+
+        quizTrueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                answer = true;
+                checkAnswer(answer);
+            }
+        });
+
+        quizFalseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                answer = false;
+                checkAnswer(answer);
+            }
+        });
+    }
+
+    private void checkAnswer(boolean answer){
+        if(quizList.get(quizCounter).getCorrectAnswer().equals(answer)){
+            loadNextQuestion();
+        }
+    }
+
+    private void loadNextQuestion(){
+        
     }
 
     private class getJSON extends AsyncTask<String, Void, List<Quiz>> {
