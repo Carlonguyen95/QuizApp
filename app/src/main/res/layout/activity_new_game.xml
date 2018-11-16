@@ -12,52 +12,43 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="score" />
+        android:text="@string/loading" />
 
     <TextView
         android:id="@+id/quiz_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/quiz_question"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="63dp"
-        android:text="category" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:text="@string/loading" />
 
     <TextView
         android:id="@+id/quiz_question"
-        android:layout_width="301dp"
-        android:layout_height="176dp"
+        android:layout_width="320dp"
+        android:layout_height="210dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="147dp"
-        android:text="question"
+        android:layout_marginTop="150dp"
+        android:text="@string/loading"
         android:textSize="20dp" />
 
     <Button
-        android:id="@+id/quiz_next_question"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="134dp"
-        android:text="Next" />
-
-    <Button
         android:id="@+id/quiz_true_button"
-        android:layout_width="wrap_content"
+        android:layout_width="155dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/quiz_next_question"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-134dp"
+        android:layout_alignStart="@+id/quiz_question"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="99dp"
         android:text="True" />
 
     <Button
         android:id="@+id/quiz_false_button"
-        android:layout_width="wrap_content"
+        android:layout_width="155dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/quiz_true_button"
-        android:layout_centerHorizontal="true"
+        android:layout_alignEnd="@+id/quiz_question"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="98dp"
         android:text="False" />
 
 </RelativeLayout>

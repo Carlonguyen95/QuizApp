@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,7 +29,6 @@ public class ActivityNewGame extends Activity {
     TextView quizScore;
     TextView quizCategory;
     TextView quizQuestion;
-    Button quizNextQuestion;
     Button quizTrueButton;
     Button quizFalseButton;
 
@@ -56,7 +56,6 @@ public class ActivityNewGame extends Activity {
         quizScore = (TextView) findViewById(R.id.quiz_score);
         quizCategory = (TextView) findViewById(R.id.quiz_category);
         quizQuestion = (TextView) findViewById(R.id.quiz_question);
-        quizNextQuestion = (Button) findViewById(R.id.quiz_next_question);
         quizTrueButton = (Button) findViewById(R.id.quiz_true_button);
         quizFalseButton = (Button) findViewById(R.id.quiz_false_button);
 
@@ -64,15 +63,6 @@ public class ActivityNewGame extends Activity {
     }
 
     private void setListener(){
-        quizNextQuestion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                quizCategory.setText(quizList.get(quizCounter).getCategory());
-                quizQuestion.setText(quizList.get(quizCounter).getQuestion());
-                quizCounter--;
-            }
-        });
-
         quizTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,13 +88,17 @@ public class ActivityNewGame extends Activity {
     }
 
     private void loadNextQuestion(){
-        quizCategory.setText(quizList.get(quizCounter).getCategory());
-        quizQuestion.setText(quizList.get(quizCounter).getQuestion());
-        quizCounter--;
+        if(quizCounter > 0){
+            quizCounter--;
+            quizCategory.setText(quizList.get(quizCounter).getCategory());
+            quizQuestion.setText(quizList.get(quizCounter).getQuestion());
+        }else{
+            Toast.makeText(this, "Quiz round finish!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void updateActivityView(){
-        quizScore.setText(quizCounter + " / " + quizList.size());
+        quizScore.setText(quizCounter+1 + " / " + quizList.size());
     }
 
     private class getJSON extends AsyncTask<String, Void, List<Quiz>> {
@@ -161,11 +155,10 @@ public class ActivityNewGame extends Activity {
 
         @Override
         protected void onPostExecute(List<Quiz> quiz) {
-            updateActivityView();
             quizCounter = quizList.size()-1;
-
             quizCategory.setText(quiz.get(quizCounter).getCategory());
             quizQuestion.setText(quiz.get(quizCounter).getQuestion());
+            updateActivityView();
         }
     }
 }
