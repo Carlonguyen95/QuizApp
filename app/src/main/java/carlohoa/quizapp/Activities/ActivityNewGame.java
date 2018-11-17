@@ -112,6 +112,7 @@ public class ActivityNewGame extends Activity {
 
     private void resetGame(){
         quizQuestion.setText("");
+        quizCategory.setText("");
         quizFinishImage.setImageResource(R.drawable.app_quiz_finish_image);
     }
 

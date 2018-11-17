@@ -20,6 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.ActivityNewGame"></activity>
+        <activity android:name=".Activities.ActivityStats"></activity>
+        <activity android:name=".Activities.ActivitySettings"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

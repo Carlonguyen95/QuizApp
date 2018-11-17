@@ -30,19 +30,19 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
-//        final ImageButton gameSettingsBtn = (ImageButton)findViewById(R.id.gameSettingsBtn);
-//        gameSettingsBtn.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                openSettingActivity();
-//            }
-//        });
-//
-//        final ImageButton gameStatsBtn = (ImageButton)findViewById(R.id.gameStatsBtn);
-//        gameStatsBtn.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                openStatsActivity();
-//            }
-//        });
+        final ImageButton gameSettingsBtn = (ImageButton)findViewById(R.id.game_settings_button);
+        gameSettingsBtn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                openSettingActivity();
+            }
+        });
+
+        final ImageButton gameStatsBtn = (ImageButton)findViewById(R.id.game_stats_button);
+        gameStatsBtn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                openStatsActivity();
+            }
+        });
     }
 
     public void openNewGame(){
@@ -50,13 +50,13 @@ public class ActivityMain extends AppCompatActivity {
         startActivity(intent);
     }
 
-//    public void openSettingActivity(){
-//        Intent intent = new Intent(this, Settings.class);
-//        startActivity(intent);
-//    }
-//
-//    public void openStatsActivity(){
-//        Intent intent = new Intent(this, Stats.class);
-//        startActivity(intent);
-//    }
+    public void openSettingActivity(){
+        Intent intent = new Intent(this, ActivitySettings.class);
+        startActivity(intent);
+    }
+
+    public void openStatsActivity(){
+        Intent intent = new Intent(this, ActivityStats.class);
+        startActivity(intent);
+    }
 }
