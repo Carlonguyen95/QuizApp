@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
@@ -33,15 +34,17 @@ public class ActivityNewGame extends Activity {
     RelativeLayout activityNewGameLayout;
     ImageView quizFinishImage;
     TextView quizScore;
-    TextView quizCategory;
+    TextView quizTimer;
     TextView quizQuestion;
     Button quizTrueButton;
     Button quizFalseButton;
 
+    private CountDownTimer quizCDT;
     private List<Quiz> quizList;
     private Quiz quiz;
-    private Integer quizIndex;
-    private Integer quizCounter = 1;
+    private int quizIndex;
+    private int quizCounter = 1;
+    private int quizCountDownCounter = 15;
     private String answer;
 
     @Override
@@ -63,12 +66,23 @@ public class ActivityNewGame extends Activity {
         activityNewGameLayout = (RelativeLayout) findViewById(R.id.activity_new_game_layout);
         quizFinishImage = (ImageView) findViewById(R.id.quiz_finish_image);
         quizScore = (TextView) findViewById(R.id.quiz_score);
-        quizCategory = (TextView) findViewById(R.id.quiz_category);
+        quizTimer = (TextView) findViewById(R.id.quiz_timer);
         quizQuestion = (TextView) findViewById(R.id.quiz_question);
         quizTrueButton = (Button) findViewById(R.id.quiz_true_button);
         quizFalseButton = (Button) findViewById(R.id.quiz_false_button);
 
         setListener();
+
+        quizCDT = new CountDownTimer(15000, 1000){
+            public void onTick(long millisUntilFinished){
+                quizTimer.setText(String.valueOf(quizCountDownCounter));
+                quizCountDownCounter--;
+            }
+            public void onFinish(){
+                endGameDialog();
+                resetGame();
+            }
+        }.start();
     }
 
     /**
@@ -92,6 +106,26 @@ public class ActivityNewGame extends Activity {
         });
     }
 
+    /**
+     * Set the timer for each question (15 seconds)
+     **/
+    private void setCountDownTimer(){
+        if(quizCDT != null){
+            quizCDT.cancel();
+        }
+        quizCountDownCounter = 15;
+        quizCDT = new CountDownTimer(15000, 1000){
+            public void onTick(long millisUntilFinished){
+                quizTimer.setText(String.valueOf(quizCountDownCounter));
+                quizCountDownCounter--;
+            }
+            public void onFinish(){
+                endGameDialog();
+                resetGame();
+            }
+        }.start();
+    }
+
     private void checkAnswer(String answer){
         if(quizList.get(quizIndex).getCorrectAnswer().equals(answer)){
             loadNextQuestion();
@@ -102,9 +136,10 @@ public class ActivityNewGame extends Activity {
     private void loadNextQuestion(){
         if(quizIndex > 0){
             quizIndex--;
-            quizCategory.setText(quizList.get(quizIndex).getCategory());
             quizQuestion.setText(quizList.get(quizIndex).getQuestion());
+            setCountDownTimer();
         }else{
+            quizCDT.cancel();
             endGameDialog();
             resetGame();
         }
@@ -118,7 +153,7 @@ public class ActivityNewGame extends Activity {
 
     private void resetGame(){
         quizQuestion.setText("");
-        quizCategory.setText("");
+        quizTimer.setText("");
         quizFinishImage.setImageResource(R.drawable.app_quiz_finish_image);
     }
 
@@ -225,7 +260,7 @@ public class ActivityNewGame extends Activity {
                             JSONObject dataObject = dataArray.getJSONObject(i);
 
                             /**
-                             * For every quiz from URL, create a quiz-object with the respective quiz-data and push to an Arraylist
+                             * For every quiz from URL, create a quiz-object with the respective quiz-data and push to the Arraylist
                              **/
                             quiz = new Quiz();
                             quiz.setID(i);
@@ -250,14 +285,14 @@ public class ActivityNewGame extends Activity {
         }
 
         /**
-         * Initialize first quiz-question
+         * Initialize first question
          **/
         @Override
         protected void onPostExecute(List<Quiz> quiz) {
             quizIndex = quizList.size()-1;
-            quizCategory.setText(quiz.get(quizIndex).getCategory());
             quizQuestion.setText(quiz.get(quizIndex).getQuestion());
-            updateActivityView();
+            quizScore.setText("Question " + quizCounter + " / " + quizList.size());
+            setBackgroundColor();
         }
     }
 }
