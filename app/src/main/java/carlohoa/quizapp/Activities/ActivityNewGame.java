@@ -52,13 +52,14 @@ public class ActivityNewGame extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_game);
-        activityNewGameLayout = (RelativeLayout) findViewById(R.id.activity_new_game_layout);
+
         getJSON task = new getJSON();
         quizList = new ArrayList<>();
         task.execute(new String[]{
                 "https://opentdb.com/api.php?amount=10&type=boolean"
         });
 
+        activityNewGameLayout = (RelativeLayout) findViewById(R.id.activity_new_game_layout);
         quizFinishImage = (ImageView) findViewById(R.id.quiz_finish_image);
         quizScore = (TextView) findViewById(R.id.quiz_score);
         quizCategory = (TextView) findViewById(R.id.quiz_category);
@@ -69,6 +70,9 @@ public class ActivityNewGame extends Activity {
         setListener();
     }
 
+    /**
+     * Initialize listener for buttons
+     **/
     private void setListener(){
         quizTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +120,9 @@ public class ActivityNewGame extends Activity {
         quizFinishImage.setImageResource(R.drawable.app_quiz_finish_image);
     }
 
+    /**
+     * Set the background-color relative to the Quiz's category that is being displayed
+     **/
     private void setBackgroundColor( ){
         String category = quizList.get(quizCounter).getCategory();
 
@@ -150,6 +157,9 @@ public class ActivityNewGame extends Activity {
         }
     }
 
+    /**
+     * A dialog which prompts the user for a new game at the end
+     **/
     private void endGameDialog(){
         AlertDialog.Builder box = new AlertDialog.Builder(ActivityNewGame.this);
         box.setMessage(getResources().getString(R.string.finishGameText));
@@ -176,8 +186,14 @@ public class ActivityNewGame extends Activity {
         dialog.show();
     }
 
+    /**
+    * JSON-class
+    **/
     private class getJSON extends AsyncTask<String, Void, List<Quiz>> {
 
+        /**
+         * Getting JSON-object
+         **/
         @Override
         protected List doInBackground(String... urls) {
             String retur = "";
@@ -206,6 +222,9 @@ public class ActivityNewGame extends Activity {
                         for (int i = 0; i < dataArray.length(); i++) {
                             JSONObject dataObject = dataArray.getJSONObject(i);
 
+                            /**
+                             * For every quiz from URL, create a quiz-object with the respective quiz-data and push to an Arraylist
+                             **/
                             quiz = new Quiz();
                             quiz.setID(i);
                             quiz.setCategory(dataObject.getString("category"));;
@@ -228,6 +247,9 @@ public class ActivityNewGame extends Activity {
             return quizList;
         }
 
+        /**
+         * Initialize first quiz-question
+         **/
         @Override
         protected void onPostExecute(List<Quiz> quiz) {
             quizCounter = quizList.size()-1;
