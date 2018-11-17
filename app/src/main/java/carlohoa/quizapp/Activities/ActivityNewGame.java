@@ -40,7 +40,8 @@ public class ActivityNewGame extends Activity {
 
     private List<Quiz> quizList;
     private Quiz quiz;
-    private Integer quizCounter;
+    private Integer quizIndex;
+    private Integer quizCounter = 1;
     private String answer;
 
     @Override
@@ -92,17 +93,17 @@ public class ActivityNewGame extends Activity {
     }
 
     private void checkAnswer(String answer){
-        if(quizList.get(quizCounter).getCorrectAnswer().equals(answer)){
+        if(quizList.get(quizIndex).getCorrectAnswer().equals(answer)){
             loadNextQuestion();
             updateActivityView();
         }
     }
 
     private void loadNextQuestion(){
-        if(quizCounter > 0){
-            quizCounter--;
-            quizCategory.setText(quizList.get(quizCounter).getCategory());
-            quizQuestion.setText(quizList.get(quizCounter).getQuestion());
+        if(quizIndex > 0){
+            quizIndex--;
+            quizCategory.setText(quizList.get(quizIndex).getCategory());
+            quizQuestion.setText(quizList.get(quizIndex).getQuestion());
         }else{
             endGameDialog();
             resetGame();
@@ -110,8 +111,9 @@ public class ActivityNewGame extends Activity {
     }
 
     private void updateActivityView(){
-        quizScore.setText(quizCounter+1 + " / " + quizList.size());
+        quizScore.setText("Question " + quizCounter + " / " + quizList.size());
         setBackgroundColor();
+        quizCounter++;
     }
 
     private void resetGame(){
@@ -124,7 +126,7 @@ public class ActivityNewGame extends Activity {
      * Set the background-color relative to the Quiz's category that is being displayed
      **/
     private void setBackgroundColor( ){
-        String category = quizList.get(quizCounter).getCategory();
+        String category = quizList.get(quizIndex).getCategory();
 
         switch(category){
             case "Mythology":
@@ -252,9 +254,9 @@ public class ActivityNewGame extends Activity {
          **/
         @Override
         protected void onPostExecute(List<Quiz> quiz) {
-            quizCounter = quizList.size()-1;
-            quizCategory.setText(quiz.get(quizCounter).getCategory());
-            quizQuestion.setText(quiz.get(quizCounter).getQuestion());
+            quizIndex = quizList.size()-1;
+            quizCategory.setText(quiz.get(quizIndex).getCategory());
+            quizQuestion.setText(quiz.get(quizIndex).getQuestion());
             updateActivityView();
         }
     }
