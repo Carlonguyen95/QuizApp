@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 public class ActivityNewGame extends Activity {
 
+    ImageView quizFinishImage;
     TextView quizScore;
     TextView quizCategory;
     TextView quizQuestion;
@@ -53,6 +55,7 @@ public class ActivityNewGame extends Activity {
                 "https://opentdb.com/api.php?amount=10&type=boolean"
         });
 
+        quizFinishImage = (ImageView) findViewById(R.id.quiz_finish_image);
         quizScore = (TextView) findViewById(R.id.quiz_score);
         quizCategory = (TextView) findViewById(R.id.quiz_category);
         quizQuestion = (TextView) findViewById(R.id.quiz_question);
@@ -94,11 +97,17 @@ public class ActivityNewGame extends Activity {
             quizQuestion.setText(quizList.get(quizCounter).getQuestion());
         }else{
             Toast.makeText(this, "Quiz round finish!", Toast.LENGTH_SHORT).show();
+            resetGame();
         }
     }
 
     private void updateActivityView(){
         quizScore.setText(quizCounter+1 + " / " + quizList.size());
+    }
+
+    private void resetGame(){
+        quizQuestion.setText("");
+        quizFinishImage.setImageResource(R.drawable.app_quiz_finish_image);
     }
 
     private class getJSON extends AsyncTask<String, Void, List<Quiz>> {
