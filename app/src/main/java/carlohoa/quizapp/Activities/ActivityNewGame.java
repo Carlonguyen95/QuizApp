@@ -2,11 +2,14 @@ package carlohoa.quizapp.Activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +30,7 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 public class ActivityNewGame extends Activity {
 
+    RelativeLayout activityNewGameLayout;
     ImageView quizFinishImage;
     TextView quizScore;
     TextView quizCategory;
@@ -48,7 +52,7 @@ public class ActivityNewGame extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_game);
-
+        activityNewGameLayout = (RelativeLayout) findViewById(R.id.activity_new_game_layout);
         getJSON task = new getJSON();
         quizList = new ArrayList<>();
         task.execute(new String[]{
@@ -96,18 +100,79 @@ public class ActivityNewGame extends Activity {
             quizCategory.setText(quizList.get(quizCounter).getCategory());
             quizQuestion.setText(quizList.get(quizCounter).getQuestion());
         }else{
-            Toast.makeText(this, "Quiz round finish!", Toast.LENGTH_SHORT).show();
+            endGameDialog();
             resetGame();
         }
     }
 
     private void updateActivityView(){
         quizScore.setText(quizCounter+1 + " / " + quizList.size());
+        setBackgroundColor();
     }
 
     private void resetGame(){
         quizQuestion.setText("");
         quizFinishImage.setImageResource(R.drawable.app_quiz_finish_image);
+    }
+
+    private void setBackgroundColor( ){
+        String category = quizList.get(quizCounter).getCategory();
+
+        switch(category){
+            case "Mythology":
+                activityNewGameLayout.setBackgroundColor(getResources().getColor(R.color.colorMythology));
+                break;
+            case "Sports":
+                activityNewGameLayout.setBackgroundColor(getResources().getColor(R.color.colorMythology));
+                break;
+            case "Geography":
+                activityNewGameLayout.setBackgroundColor(getResources().getColor(R.color.colorGeography));
+                break;
+            case "History":
+                activityNewGameLayout.setBackgroundColor(getResources().getColor(R.color.colorHistory));
+                break;
+            case "Politics":
+                activityNewGameLayout.setBackgroundColor(getResources().getColor(R.color.colorPolitics));
+                break;
+            case "Art":
+                activityNewGameLayout.setBackgroundColor(getResources().getColor(R.color.colorArt));
+                break;
+            case "Celebrities":
+                activityNewGameLayout.setBackgroundColor(getResources().getColor(R.color.colorCelebrities));
+                break;
+            case "Animals":
+                activityNewGameLayout.setBackgroundColor(getResources().getColor(R.color.colorAnimals));
+                break;
+            default:
+                activityNewGameLayout.setBackgroundColor(getResources().getColor(R.color.white));
+                break;
+        }
+    }
+
+    private void endGameDialog(){
+        AlertDialog.Builder box = new AlertDialog.Builder(ActivityNewGame.this);
+        box.setMessage(getResources().getString(R.string.finishGameText));
+
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch(which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        //newGame();
+                        //recreate();
+                        Toast.makeText(ActivityNewGame.this, getResources().getString(R.string.newGameText), Toast.LENGTH_SHORT).show();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        onBackPressed();
+                        break;
+                }
+            }
+        };
+        box.setPositiveButton(getResources().getString(R.string.dialogYes), dialogClickListener);
+        box.setNegativeButton(getResources().getString(R.string.dialogNo), dialogClickListener);
+        box.setCancelable(false);
+        AlertDialog dialog = box.create();
+        dialog.show();
     }
 
     private class getJSON extends AsyncTask<String, Void, List<Quiz>> {

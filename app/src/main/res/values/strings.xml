@@ -4,4 +4,9 @@
 
     // Activity new game
     <string name="loading">Loading...</string>
+    <string name="dialogYes">Yes</string>
+    <string name="dialogNo">No</string>
+    <string name="newGameText">New quiz game started!</string>
+    <string name="finishGameText">Quiz game finished! Do you want to start a new game?</string>
+
 </resources>

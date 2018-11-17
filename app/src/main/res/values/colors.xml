@@ -3,6 +3,7 @@
     <color name="colorPrimary">#81d4fa</color>
     <color name="colorPrimaryDark">#4ba3c7</color>
     <color name="colorAccent">#b6ffff</color>
+    <color name="white">#FFF</color>
 
     // Quiz category colors
     <color name="colorEntertainment">#D81B60</color>
