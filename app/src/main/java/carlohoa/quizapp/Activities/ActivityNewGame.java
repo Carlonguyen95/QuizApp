@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,12 +32,13 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 public class ActivityNewGame extends Activity {
 
-    RelativeLayout activityNewGameLayout;
-    TextView quizScore;
-    TextView quizTimer;
-    TextView quizQuestion;
-    Button quizTrueButton;
-    Button quizFalseButton;
+    private Toolbar toolbar;
+    private RelativeLayout activityNewGameLayout;
+    private TextView quizScore;
+    private TextView quizTimer;
+    private TextView quizQuestion;
+    private Button quizTrueButton;
+    private Button quizFalseButton;
 
     private CountDownTimer quizCDT;
     private List<Quiz> quizList;
@@ -72,6 +74,7 @@ public class ActivityNewGame extends Activity {
         quizFalseButton = (Button) findViewById(R.id.quiz_false_button);
 
         setListener();
+        setupToolbar();
     }
 
     /**
@@ -228,6 +231,17 @@ public class ActivityNewGame extends Activity {
         startActivity(intent);
     }
 
+    private void setupToolbar(){
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quizCDT.cancel();
+                finish();
+            }
+        });
+    }
+
     /**
     * JSON-class
     **/
@@ -298,6 +312,7 @@ public class ActivityNewGame extends Activity {
                 quizScore.setText("Score " + "V: " + quizCorrect + " / " + "X: " + quizWrong);
                 setBackgroundColor();
                 setCountDownTimer();
+                Toast.makeText(ActivityNewGame.this, getResources().getString(R.string.game_started), Toast.LENGTH_SHORT).show();
             }
         }
     }
