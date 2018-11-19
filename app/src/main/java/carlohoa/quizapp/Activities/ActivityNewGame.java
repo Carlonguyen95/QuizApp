@@ -10,7 +10,6 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,17 +72,6 @@ public class ActivityNewGame extends Activity {
         quizFalseButton = (Button) findViewById(R.id.quiz_false_button);
 
         setListener();
-
-        quizCDT = new CountDownTimer(15000, 1000){
-            public void onTick(long millisUntilFinished){
-                quizTimer.setText(String.valueOf(quizCountDownCounter));
-                quizCountDownCounter--;
-            }
-            public void onFinish(){
-                endGameDialog();
-                resetGame();
-            }
-        }.start();
     }
 
     /**
@@ -128,13 +116,15 @@ public class ActivityNewGame extends Activity {
     }
 
     private void checkAnswer(String answer){
-        if(quizList.get(quizIndex).getCorrectAnswer().equals(answer)){
-            quizCorrect++;
-        }else {
-            quizWrong++;
+        if(!quizList.isEmpty()){
+            if(quizList.get(quizIndex).getCorrectAnswer().equals(answer)){
+                quizCorrect++;
+            }else {
+                quizWrong++;
+            }
+            loadNextQuestion();
+            updateActivityView();
         }
-        loadNextQuestion();
-        updateActivityView();
     }
 
     private void loadNextQuestion(){
@@ -248,7 +238,6 @@ public class ActivityNewGame extends Activity {
          **/
         @Override
         protected List doInBackground(String... urls) {
-            String retur = "";
             String s = "";
             String result = "";
 
@@ -285,7 +274,6 @@ public class ActivityNewGame extends Activity {
                             quiz.setQuestion(dataObject.getString("question"));
                             quiz.setCorrectAnswer(dataObject.getString("correct_answer"));
                             quizList.add(quiz);
-//                            retur = retur + name+ "\n";
                         }
                         return quizList;
                     }catch (JSONException e){
@@ -304,10 +292,13 @@ public class ActivityNewGame extends Activity {
          **/
         @Override
         protected void onPostExecute(List<Quiz> quiz) {
-            quizIndex = quizList.size()-1;
-            quizQuestion.setText(quiz.get(quizIndex).getQuestion());
-            quizScore.setText("Score " + "V: " + quizCorrect + " / " + "X: " + quizWrong);
-            setBackgroundColor();
+            if(!quizList.isEmpty()){
+                quizIndex = quizList.size()-1;
+                quizQuestion.setText(quiz.get(quizIndex).getQuestion());
+                quizScore.setText("Score " + "V: " + quizCorrect + " / " + "X: " + quizWrong);
+                setBackgroundColor();
+                setCountDownTimer();
+            }
         }
     }
 }
