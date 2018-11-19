@@ -42,6 +42,8 @@ public class ActivityNewGame extends Activity {
     private CountDownTimer quizCDT;
     private List<Quiz> quizList;
     private Quiz quiz;
+    private int quizCorrect;
+    private int quizWrong;
     private int quizIndex;
     private int quizCounter = 1;
     private int quizCountDownCounter = 15;
@@ -128,6 +130,11 @@ public class ActivityNewGame extends Activity {
 
     private void checkAnswer(String answer){
         if(quizList.get(quizIndex).getCorrectAnswer().equals(answer)){
+            quizCorrect++;
+            loadNextQuestion();
+            updateActivityView();
+        }else {
+            quizWrong++;
             loadNextQuestion();
             updateActivityView();
         }
@@ -146,7 +153,7 @@ public class ActivityNewGame extends Activity {
     }
 
     private void updateActivityView(){
-        quizScore.setText("Question " + quizCounter + " / " + quizList.size());
+        quizScore.setText("Score " + "V: " + quizCorrect + " / " + "X: " + quizWrong);
         setBackgroundColor();
         quizCounter++;
     }
@@ -187,6 +194,9 @@ public class ActivityNewGame extends Activity {
                 break;
             case "Animals":
                 activityNewGameLayout.setBackgroundColor(getResources().getColor(R.color.colorAnimals));
+                break;
+            case "General Knowledge":
+                activityNewGameLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 break;
             default:
                 activityNewGameLayout.setBackgroundColor(getResources().getColor(R.color.white));
@@ -291,7 +301,7 @@ public class ActivityNewGame extends Activity {
         protected void onPostExecute(List<Quiz> quiz) {
             quizIndex = quizList.size()-1;
             quizQuestion.setText(quiz.get(quizIndex).getQuestion());
-            quizScore.setText("Question " + quizCounter + " / " + quizList.size());
+            quizScore.setText("Score " + "V: " + quizCorrect + " / " + "X: " + quizWrong);
             setBackgroundColor();
         }
     }
