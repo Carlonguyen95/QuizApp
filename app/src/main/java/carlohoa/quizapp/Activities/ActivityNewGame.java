@@ -159,7 +159,6 @@ public class ActivityNewGame extends Activity {
     private void resetGame(){
         quizQuestion.setText("");
         quizTimer.setText("");
-        quizFinishImage.setImageResource(R.drawable.app_quiz_finish_image);
     }
 
     /**
