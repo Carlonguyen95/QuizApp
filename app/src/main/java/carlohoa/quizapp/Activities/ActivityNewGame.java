@@ -3,6 +3,7 @@ package carlohoa.quizapp.Activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -32,7 +33,6 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 public class ActivityNewGame extends Activity {
 
     RelativeLayout activityNewGameLayout;
-    ImageView quizFinishImage;
     TextView quizScore;
     TextView quizTimer;
     TextView quizQuestion;
@@ -146,9 +146,10 @@ public class ActivityNewGame extends Activity {
             quizQuestion.setText(quizList.get(quizIndex).getQuestion());
             setCountDownTimer();
         }else{
-            quizCDT.cancel();
-            endGameDialog();
-            resetGame();
+//            quizCDT.cancel();
+            gameResult();
+//            endGameDialog();
+//            resetGame();
         }
     }
 
@@ -231,6 +232,14 @@ public class ActivityNewGame extends Activity {
         box.setCancelable(false);
         AlertDialog dialog = box.create();
         dialog.show();
+    }
+
+    private void gameResult(){
+        quizCDT.cancel();
+        Intent intent = new Intent(this, ActivityResult.class);
+        intent.putExtra("QuestionSize", quizList.size());
+        intent.putExtra("QuestionCorrect", quizCorrect);
+        startActivity(intent);
     }
 
     /**
