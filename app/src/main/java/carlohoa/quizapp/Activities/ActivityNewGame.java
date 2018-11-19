@@ -66,7 +66,6 @@ public class ActivityNewGame extends Activity {
         });
 
         activityNewGameLayout = (RelativeLayout) findViewById(R.id.activity_new_game_layout);
-        quizFinishImage = (ImageView) findViewById(R.id.quiz_finish_image);
         quizScore = (TextView) findViewById(R.id.quiz_score);
         quizTimer = (TextView) findViewById(R.id.quiz_timer);
         quizQuestion = (TextView) findViewById(R.id.quiz_question);
@@ -131,13 +130,11 @@ public class ActivityNewGame extends Activity {
     private void checkAnswer(String answer){
         if(quizList.get(quizIndex).getCorrectAnswer().equals(answer)){
             quizCorrect++;
-            loadNextQuestion();
-            updateActivityView();
         }else {
             quizWrong++;
-            loadNextQuestion();
-            updateActivityView();
         }
+        loadNextQuestion();
+        updateActivityView();
     }
 
     private void loadNextQuestion(){

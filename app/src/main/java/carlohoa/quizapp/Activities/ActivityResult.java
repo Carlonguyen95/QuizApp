@@ -29,8 +29,13 @@ public class ActivityResult extends Activity {
     private void showResult(){
         quizCorrect = getIntent().getExtras().getInt("QuestionCorrect");
         quizSize = getIntent().getExtras().getInt("QuestionSize");
-
         quizResultPercentage = ((double)quizCorrect/quizSize)*100;
+
+        if(quizResultPercentage > 50){
+            quizFinishImage.setImageResource(R.drawable.app_result_medal);
+        }else{
+            quizFinishImage.setImageResource(R.drawable.app_quiz_finish_image);
+        }
         quizResult.setText("Result: " + quizResultPercentage + "%");
     }
 }
