@@ -34,9 +34,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="35dp"
+        android:layout_marginBottom="50dp"
         android:padding="15dp"
-        android:text="Delete"
+        android:text="Clear Stats"
         android:textAlignment="center"
         android:textSize="20dp" />
 

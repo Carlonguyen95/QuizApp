@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,12 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -42,6 +44,7 @@ public class ActivityNewGame extends Activity {
     private TextView quizQuestion;
     private Button quizTrueButton;
     private Button quizFalseButton;
+    private ArrayList<String> sharedArrayList;
 
     private CountDownTimer quizCDT;
     private List<Quiz> quizList;
@@ -65,6 +68,7 @@ public class ActivityNewGame extends Activity {
 
         getJSON task = new getJSON();
         quizList = new ArrayList<>();
+        sharedArrayList = new ArrayList<>();
         task.execute(new String[]{
                 "https://opentdb.com/api.php?amount=10&type=boolean"
         });
@@ -224,6 +228,8 @@ public class ActivityNewGame extends Activity {
 
     private void gameResult(){
         quizCDT.cancel();
+        savePreferencesStats();
+
         Intent intent = new Intent(this, ActivityResult.class);
         intent.putExtra("QuestionSize", quizList.size());
         intent.putExtra("QuestionCorrect", quizCorrect);
@@ -250,10 +256,14 @@ public class ActivityNewGame extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
-    private void saveStats(){
-        ArrayList sharedArrayList = new ArrayList<>();
-        SharedPreferences sharedPreferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
+    private void savePreferencesStats(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        sharedArrayList.add("Result from game: " + quizCorrect + " / " + quizWrong);
+        Gson gson = new Gson();
+        String json = gson.toJson(sharedArrayList);
+        editor.putString("STAT_ARRAY_LIST", json);
         editor.apply();
     }
 
