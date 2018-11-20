@@ -22,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -248,10 +249,13 @@ public class ActivityNewGame extends Activity {
         }
         return super.onKeyDown(keyCode, event);
     }
-//    private void saveStats(){
-//        SharedPreferences sharedPreferences = new SharedPreferences() {
-//        }
-//    }
+
+    private void saveStats(){
+        ArrayList sharedArrayList = new ArrayList<>();
+        SharedPreferences sharedPreferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.apply();
+    }
 
     /**
     * JSON-class
