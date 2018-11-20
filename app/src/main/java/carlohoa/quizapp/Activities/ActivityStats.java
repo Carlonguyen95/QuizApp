@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toolbar;
 
@@ -24,10 +25,11 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 public class ActivityStats extends Activity {
 
     private Toolbar toolbar;
-
+    private Button statsClearButton;
     private ListView listView;
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> statsArrayList;
+    private ArrayList<String> tempList;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -39,25 +41,40 @@ public class ActivityStats extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
         setupToolbar();
-
+        statsClearButton = (Button) findViewById(R.id.stats_clear_button);
         listView = (ListView) findViewById(R.id.stats_listview);
 
+        setListener();
         loadPreferencesStats();
+    }
+
+    private void setListener(){
+        statsClearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                statsArrayList.clear();
+                arrayAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     private void loadPreferencesStats(){
         statsArrayList = new ArrayList<>();
+        tempList = new ArrayList<>();
         try{
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             Gson gson = new Gson();
             String json = sharedPreferences.getString("STAT_ARRAY_LIST", null);
             Type type = new TypeToken<ArrayList<String>>() {}.getType();
 
-            statsArrayList = gson.fromJson(json, type);
-
+            tempList = gson.fromJson(json, type);
             arrayAdapter = new ArrayAdapter<>(this, R.layout.stats_listview_item, R.id.stats_textview, statsArrayList);
             listView.setAdapter(arrayAdapter);
-            arrayAdapter.notifyDataSetChanged();
+            for(int i = 0; i < tempList.size(); i++){
+//                statsArrayList.add(tempList.get(i));
+//                arrayAdapter.notifyDataSetChanged();
+                arrayAdapter.add(tempList.get(i));
+            }
 
         }catch(Exception e){
             e.printStackTrace();

@@ -68,7 +68,6 @@ public class ActivityNewGame extends Activity {
 
         getJSON task = new getJSON();
         quizList = new ArrayList<>();
-        sharedArrayList = new ArrayList<>();
         task.execute(new String[]{
                 "https://opentdb.com/api.php?amount=10&type=boolean"
         });
@@ -259,6 +258,7 @@ public class ActivityNewGame extends Activity {
     private void savePreferencesStats(){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        sharedArrayList = new ArrayList<>();
 
         sharedArrayList.add("Result from game: " + quizCorrect + " / " + quizWrong);
         Gson gson = new Gson();

@@ -1,12 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/toolbar"/>
+
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="This is settings"/>
+        android:layout_marginTop="30dp"
+        android:text="Number of Questions"
+        android:textSize="24sp"
+        android:textAlignment="center"/>
+
+    <RadioGroup
+        android:id="@+id/settings_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:checkedButton="@id/questions_10">
+        <RadioButton
+            android:id="@+id/questions_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10"/>
+        <RadioButton
+            android:id="@+id/questions_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20"/>
+        <RadioButton
+            android:id="@+id/questions_30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30"/>
+    </RadioGroup>
 
 </LinearLayout>
