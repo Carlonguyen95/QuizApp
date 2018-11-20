@@ -61,7 +61,7 @@ public class ActivityResult extends Activity {
         quizResultPercentage = ((double)quizCorrect/quizSize)*100;
 
         quizFinishImage.setImageResource(R.drawable.app_result_medal);
-        quizResult.setText(quizResultPercentage + "%");
+        quizResult.setText("Your Score " + quizResultPercentage + "%");
     }
 
     private void setupToolbar(){
