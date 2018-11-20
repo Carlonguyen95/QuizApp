@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -112,8 +114,7 @@ public class ActivityNewGame extends Activity {
                 quizCountDownCounter--;
             }
             public void onFinish(){
-                endGameDialog();
-                resetGame();
+                gameResult();
             }
         }.start();
     }
@@ -136,10 +137,7 @@ public class ActivityNewGame extends Activity {
             quizQuestion.setText(quizList.get(quizIndex).getQuestion());
             setCountDownTimer();
         }else{
-//            quizCDT.cancel();
             gameResult();
-//            endGameDialog();
-//            resetGame();
         }
     }
 
@@ -229,6 +227,7 @@ public class ActivityNewGame extends Activity {
         intent.putExtra("QuestionSize", quizList.size());
         intent.putExtra("QuestionCorrect", quizCorrect);
         startActivity(intent);
+        finish();
     }
 
     private void setupToolbar(){
@@ -241,6 +240,18 @@ public class ActivityNewGame extends Activity {
             }
         });
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+//    private void saveStats(){
+//        SharedPreferences sharedPreferences = new SharedPreferences() {
+//        }
+//    }
 
     /**
     * JSON-class

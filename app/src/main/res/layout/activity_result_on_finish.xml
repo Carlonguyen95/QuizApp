@@ -47,7 +47,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="39dp"
-        android:layout_marginBottom="62dp"
+        android:layout_marginBottom="60dp"
         android:background="@drawable/play_icon_shape"
         android:padding="15dp"
         android:text="@string/play_again"
