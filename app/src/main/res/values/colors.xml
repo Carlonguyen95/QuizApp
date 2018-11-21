@@ -6,15 +6,15 @@
     <color name="white">#FFF</color>
 
     // Quiz category colors
-    <color name="colorEntertainment">#D81B60</color>
-    <color name="colorScience">#FF05DF3F</color>
+    <color name="colorEntertainment">#f56398</color>
+    <color name="colorScience">#49ea74</color>
     <color name="colorMythology">#FF05A1DF</color>
     <color name="colorSports">#df6305</color>
     <color name="colorGeography">#3be4a3</color>
     <color name="colorHistory">#dfd005</color>
     <color name="colorPolitics">#b4d6e4</color>
-    <color name="colorArt">#e3df051e</color>
-    <color name="colorCelebrities">#c905df</color>
+    <color name="colorArt">#e3f24559</color>
+    <color name="colorCelebrities">#d472df</color>
     <color name="colorAnimals">#65b70d</color>
 
     <color name="color_play_button">#FF05DF3F</color>

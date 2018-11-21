@@ -2,13 +2,16 @@ package carlohoa.quizapp.Activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import carlohoa.quizapp.R;
@@ -50,9 +53,7 @@ public class ActivityResult extends Activity {
         playAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ActivityResult.this, ActivityNewGame.class);
-                startActivity(intent);
-                finish();
+                playAgainDialog();
             }
         });
     }
@@ -85,5 +86,31 @@ public class ActivityResult extends Activity {
             finish();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private void playAgainDialog(){
+        AlertDialog.Builder box = new AlertDialog.Builder(ActivityResult.this);
+        box.setMessage(getResources().getString(R.string.play_again_text));
+
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch(which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        Intent intent = new Intent(ActivityResult.this, ActivityNewGame.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        onBackPressed();
+                        break;
+                }
+            }
+        };
+        box.setPositiveButton(getResources().getString(R.string.dialogYes), dialogClickListener);
+        box.setNegativeButton(getResources().getString(R.string.dialogNo), dialogClickListener);
+        box.setCancelable(false);
+        AlertDialog dialog = box.create();
+        dialog.show();
     }
 }

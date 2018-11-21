@@ -7,8 +7,7 @@
     <string name="loading">Loading...</string>
     <string name="dialogYes">Yes</string>
     <string name="dialogNo">No</string>
-    <string name="newGameText">New quiz game started!</string>
-    <string name="finishGameText">Quiz game finished! Do you want to start a new game?</string>
+    <string name="play_again_text">Are you sure you want to play again?</string>
     <string name="game_started">Game Started!</string>
 
     // Activity result

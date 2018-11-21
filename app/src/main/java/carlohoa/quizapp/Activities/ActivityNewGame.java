@@ -211,33 +211,6 @@ public class ActivityNewGame extends Activity {
         }
     }
 
-    /**
-     * A dialog which prompts the user for a new game at the end
-     **/
-    private void endGameDialog(){
-        AlertDialog.Builder box = new AlertDialog.Builder(ActivityNewGame.this);
-        box.setMessage(getResources().getString(R.string.finishGameText));
-
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch(which){
-                    case DialogInterface.BUTTON_POSITIVE:
-                        Toast.makeText(ActivityNewGame.this, getResources().getString(R.string.newGameText), Toast.LENGTH_SHORT).show();
-                        break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        onBackPressed();
-                        break;
-                }
-            }
-        };
-        box.setPositiveButton(getResources().getString(R.string.dialogYes), dialogClickListener);
-        box.setNegativeButton(getResources().getString(R.string.dialogNo), dialogClickListener);
-        box.setCancelable(false);
-        AlertDialog dialog = box.create();
-        dialog.show();
-    }
-
     private void gameResult(){
         quizCDT.cancel();
         saveStats();
