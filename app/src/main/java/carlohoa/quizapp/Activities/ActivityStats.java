@@ -34,7 +34,6 @@ public class ActivityStats extends Activity {
 
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> statsArrayList;
-    private ArrayList<String> tempList;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -58,9 +57,7 @@ public class ActivityStats extends Activity {
         statsClearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor editor = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE).edit();
-                editor.clear();
-                editor.commit();
+                DB.deleteQuizStat(ActivityStats.this);
                 statsArrayList.clear();
                 arrayAdapter.notifyDataSetChanged();
             }

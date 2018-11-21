@@ -22,10 +22,11 @@ public class DBHandler extends Activity{
         }
     }
 
-    public void deleteQuizStat(Context context, String id){
+    public void deleteQuizStat(Context context){
         try {
-            String selection = context.getString(R.string.QUIZ_ID) + "=" + "'" + id + "'";
-            context.getContentResolver().delete(CONTENT_QUIZ_URI, selection, null);
-        }catch (Exception e){}
+            context.getContentResolver().delete(CONTENT_QUIZ_URI, null, null);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
