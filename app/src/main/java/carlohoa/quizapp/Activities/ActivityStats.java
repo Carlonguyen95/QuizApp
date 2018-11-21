@@ -52,6 +52,9 @@ public class ActivityStats extends Activity {
         statsClearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor editor = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE).edit();
+                editor.clear();
+                editor.commit();
                 statsArrayList.clear();
                 arrayAdapter.notifyDataSetChanged();
             }
@@ -62,18 +65,18 @@ public class ActivityStats extends Activity {
         statsArrayList = new ArrayList<>();
         tempList = new ArrayList<>();
         try{
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+
             Gson gson = new Gson();
-            String json = sharedPreferences.getString("STAT_ARRAY_LIST", null);
+            String json = sharedPreferences.getString("STAT_LIST", null);
             Type type = new TypeToken<ArrayList<String>>() {}.getType();
 
             tempList = gson.fromJson(json, type);
             arrayAdapter = new ArrayAdapter<>(this, R.layout.stats_listview_item, R.id.stats_textview, statsArrayList);
             listView.setAdapter(arrayAdapter);
             for(int i = 0; i < tempList.size(); i++){
-//                statsArrayList.add(tempList.get(i));
-//                arrayAdapter.notifyDataSetChanged();
-                arrayAdapter.add(tempList.get(i));
+                statsArrayList.add(tempList.get(i));
+                arrayAdapter.notifyDataSetChanged();
             }
 
         }catch(Exception e){

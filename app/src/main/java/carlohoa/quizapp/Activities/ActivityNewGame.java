@@ -19,6 +19,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -256,14 +257,14 @@ public class ActivityNewGame extends Activity {
     }
 
     private void savePreferencesStats(){
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         sharedArrayList = new ArrayList<>();
-
         sharedArrayList.add("Result from game: " + quizCorrect + " / " + quizWrong);
+
+        SharedPreferences.Editor editor = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE).edit();
+
         Gson gson = new Gson();
         String json = gson.toJson(sharedArrayList);
-        editor.putString("STAT_ARRAY_LIST", json);
+        editor.putString("STAT_LIST", json);
         editor.apply();
     }
 
