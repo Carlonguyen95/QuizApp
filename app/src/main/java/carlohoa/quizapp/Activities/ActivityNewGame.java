@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,21 +44,22 @@ public class ActivityNewGame extends Activity {
     private DBHandler DB;
 
     private RelativeLayout activityNewGameLayout;
+    private TextView quizCounter;
     private TextView quizScore;
     private TextView quizTimer;
     private TextView quizQuestion;
     private Button quizTrueButton;
     private Button quizFalseButton;
 
-    private ArrayList<String> sharedArrayList;
     private CountDownTimer quizCDT;
     private List<Quiz> quizList;
     private Quiz quiz;
 
+    private int questions;
     private int quizCorrect;
     private int quizWrong;
     private int quizIndex;
-    private int quizCounter = 1;
+    private int quizNumberCounter = 1;
     private int quizCountDownCounter = 15;
     private String answer;
 
@@ -71,14 +73,17 @@ public class ActivityNewGame extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_game);
 
+        getNumberOfQuestions();
         getJSON task = new getJSON();
         DB = new DBHandler();
         quizList = new ArrayList<>();
+
         task.execute(new String[]{
-                "https://opentdb.com/api.php?amount=10&type=boolean"
+                "https://opentdb.com/api.php?amount="+questions+"&type=boolean"
         });
 
         activityNewGameLayout = (RelativeLayout) findViewById(R.id.activity_new_game_layout);
+        quizCounter = (TextView) findViewById(R.id.quiz_counter);
         quizScore = (TextView) findViewById(R.id.quiz_score);
         quizTimer = (TextView) findViewById(R.id.quiz_timer);
         quizQuestion = (TextView) findViewById(R.id.quiz_question);
@@ -153,8 +158,9 @@ public class ActivityNewGame extends Activity {
 
     private void updateActivityView(){
         quizScore.setText("Score " + "V: " + quizCorrect + " / " + "X: " + quizWrong);
+        quizCounter.setText("Question " + quizNumberCounter + " / " + quizList.size());
         setBackgroundColor();
-        quizCounter++;
+        quizNumberCounter++;
     }
 
     private void resetGame(){
@@ -253,6 +259,11 @@ public class ActivityNewGame extends Activity {
         });
     }
 
+    private void getNumberOfQuestions(){
+        questions = getSharedPreferences("Questions", MODE_PRIVATE)
+                .getInt("Questions", 10);
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
@@ -333,6 +344,7 @@ public class ActivityNewGame extends Activity {
                 quizIndex = quizList.size()-1;
                 quizQuestion.setText(quiz.get(quizIndex).getQuestion());
                 quizScore.setText("Score " + "V: " + quizCorrect + " / " + "X: " + quizWrong);
+                quizCounter.setText("Question " + quizNumberCounter + " / " + quizList.size());
                 setBackgroundColor();
                 setCountDownTimer();
                 Toast.makeText(ActivityNewGame.this, getResources().getString(R.string.game_started), Toast.LENGTH_SHORT).show();
