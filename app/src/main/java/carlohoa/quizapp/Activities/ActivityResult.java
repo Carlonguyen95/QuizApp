@@ -69,6 +69,7 @@ public class ActivityResult extends Activity {
 
     private void setupToolbar(){
         toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.title_result);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

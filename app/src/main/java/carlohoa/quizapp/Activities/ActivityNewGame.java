@@ -206,7 +206,7 @@ public class ActivityNewGame extends Activity {
                 activityNewGameLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 break;
             default:
-                activityNewGameLayout.setBackgroundColor(getResources().getColor(R.color.white));
+                activityNewGameLayout.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 break;
         }
     }
@@ -224,6 +224,7 @@ public class ActivityNewGame extends Activity {
 
     private void setupToolbar(){
         toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.title_new_game);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

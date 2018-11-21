@@ -88,6 +88,7 @@ public class ActivityStats extends Activity {
 
     private void setupToolbar(){
         toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.title_stats);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

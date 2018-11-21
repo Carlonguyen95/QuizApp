@@ -80,6 +80,7 @@ public class ActivitySettings extends Activity {
 
     private void setupToolbar(){
         toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.title_settings);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
