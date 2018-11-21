@@ -32,6 +32,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import carlohoa.quizapp.DBHandler;
 import carlohoa.quizapp.Model.Quiz;
 import carlohoa.quizapp.R;
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
@@ -39,17 +40,20 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 public class ActivityNewGame extends Activity {
 
     private Toolbar toolbar;
+    private DBHandler DB;
+
     private RelativeLayout activityNewGameLayout;
     private TextView quizScore;
     private TextView quizTimer;
     private TextView quizQuestion;
     private Button quizTrueButton;
     private Button quizFalseButton;
-    private ArrayList<String> sharedArrayList;
 
+    private ArrayList<String> sharedArrayList;
     private CountDownTimer quizCDT;
     private List<Quiz> quizList;
     private Quiz quiz;
+
     private int quizCorrect;
     private int quizWrong;
     private int quizIndex;
@@ -68,6 +72,7 @@ public class ActivityNewGame extends Activity {
         setContentView(R.layout.activity_new_game);
 
         getJSON task = new getJSON();
+        DB = new DBHandler();
         quizList = new ArrayList<>();
         task.execute(new String[]{
                 "https://opentdb.com/api.php?amount=10&type=boolean"
@@ -228,7 +233,7 @@ public class ActivityNewGame extends Activity {
 
     private void gameResult(){
         quizCDT.cancel();
-        savePreferencesStats();
+        saveStats();
 
         Intent intent = new Intent(this, ActivityResult.class);
         intent.putExtra("QuestionSize", quizList.size());
@@ -256,16 +261,8 @@ public class ActivityNewGame extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
-    private void savePreferencesStats(){
-        sharedArrayList = new ArrayList<>();
-        sharedArrayList.add("Result from game: " + quizCorrect + " / " + quizWrong);
-
-        SharedPreferences.Editor editor = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE).edit();
-
-        Gson gson = new Gson();
-        String json = gson.toJson(sharedArrayList);
-        editor.putString("STAT_LIST", json);
-        editor.apply();
+    private void saveStats(){
+        DB.addQuizStat(this, quizCorrect, quizWrong);
     }
 
     /**
