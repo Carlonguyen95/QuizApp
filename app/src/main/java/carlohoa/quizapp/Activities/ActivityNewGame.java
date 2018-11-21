@@ -44,8 +44,9 @@ public class ActivityNewGame extends Activity {
     private DBHandler DB;
 
     private RelativeLayout activityNewGameLayout;
+    private TextView quizCorrectCounter;
+    private TextView quizWrongCounter;
     private TextView quizCounter;
-    private TextView quizScore;
     private TextView quizTimer;
     private TextView quizQuestion;
     private Button quizTrueButton;
@@ -83,8 +84,9 @@ public class ActivityNewGame extends Activity {
         });
 
         activityNewGameLayout = (RelativeLayout) findViewById(R.id.activity_new_game_layout);
+        quizCorrectCounter = (TextView) findViewById(R.id.quiz_correct_counter);
+        quizWrongCounter = (TextView) findViewById(R.id.quiz_wrong_counter);
         quizCounter = (TextView) findViewById(R.id.quiz_counter);
-        quizScore = (TextView) findViewById(R.id.quiz_score);
         quizTimer = (TextView) findViewById(R.id.quiz_timer);
         quizQuestion = (TextView) findViewById(R.id.quiz_question);
         quizTrueButton = (Button) findViewById(R.id.quiz_true_button);
@@ -157,7 +159,8 @@ public class ActivityNewGame extends Activity {
     }
 
     private void updateActivityView(){
-        quizScore.setText("Score " + "V: " + quizCorrect + " / " + "X: " + quizWrong);
+        quizCorrectCounter.setText("  Correct:   " + quizCorrect);
+        quizWrongCounter.setText("  Incorrect: " + quizWrong);
         quizCounter.setText("Question " + quizNumberCounter + " / " + quizList.size());
         setBackgroundColor();
         quizNumberCounter++;
@@ -220,8 +223,6 @@ public class ActivityNewGame extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 switch(which){
                     case DialogInterface.BUTTON_POSITIVE:
-                        //newGame();
-                        //recreate();
                         Toast.makeText(ActivityNewGame.this, getResources().getString(R.string.newGameText), Toast.LENGTH_SHORT).show();
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -343,11 +344,11 @@ public class ActivityNewGame extends Activity {
             if(!quizList.isEmpty()){
                 quizIndex = quizList.size()-1;
                 quizQuestion.setText(quiz.get(quizIndex).getQuestion());
-                quizScore.setText("Score " + "V: " + quizCorrect + " / " + "X: " + quizWrong);
+                quizCorrectCounter.setText("  Correct:   " + quizCorrect);
+                quizWrongCounter.setText("  Incorrect: " + quizWrong);
                 quizCounter.setText("Question " + quizNumberCounter + " / " + quizList.size());
                 setBackgroundColor();
                 setCountDownTimer();
-                Toast.makeText(ActivityNewGame.this, getResources().getString(R.string.game_started), Toast.LENGTH_SHORT).show();
             }
         }
     }

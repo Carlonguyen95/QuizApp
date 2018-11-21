@@ -13,19 +13,9 @@
         android:id="@+id/quiz_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/quiz_score"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="-394dp"
-        android:text="@string/loading"
-        android:textAlignment="center" />
-
-    <TextView
-        android:id="@+id/quiz_score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="67dp"
+        android:layout_marginTop="66dp"
         android:text="@string/loading"
         android:textAlignment="center" />
 
@@ -35,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="122dp"
+        android:layout_marginTop="91dp"
         android:background="@drawable/timer_shape"
         android:textAlignment="center"
         android:textSize="25dp" />
@@ -46,31 +36,53 @@
         android:layout_height="210dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="195dp"
+        android:layout_marginTop="146dp"
         android:background="@drawable/round_icon_shape"
+        android:padding="30dp"
         android:text="@string/loading"
         android:textAlignment="center"
-        android:padding="30dp"
         android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/quiz_correct_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/quiz_timer"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="-18dp"
+        android:layout_marginBottom="97dp"
+        android:drawableLeft="@drawable/app_correct_icon"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/quiz_wrong_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/quiz_timer"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="-19dp"
+        android:layout_marginBottom="69dp"
+        android:drawableLeft="@drawable/app_fail_icon"
+        android:textAlignment="center" />
 
     <Button
         android:id="@+id/quiz_true_button"
         android:layout_width="155dp"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/quiz_question"
+        android:layout_marginTop="10dp"
         android:layout_alignStart="@+id/quiz_question"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="100dp"
-        android:text="True"
-        android:background="@drawable/answer_button_shape"/>
+        android:background="@drawable/answer_button_shape"
+        android:text="True" />
 
     <Button
         android:id="@+id/quiz_false_button"
         android:layout_width="155dp"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/quiz_question"
+        android:layout_marginTop="10dp"
         android:layout_alignEnd="@+id/quiz_question"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="100dp"
-        android:text="False"
-        android:background="@drawable/answer_button_shape"/>
+        android:background="@drawable/answer_button_shape"
+        android:text="False" />
 
 </RelativeLayout>
